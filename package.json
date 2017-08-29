@@ -1,0 +1,25 @@
+{
+  "name": "winston-example-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timberio/node-winston-example-app.git"
+  },
+  "author": "Garet McKinley",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/timberio/node-winston-example-app/issues"
+  },
+  "homepage": "https://github.com/timberio/node-winston-example-app#readme",
+  "dependencies": {
+    "express": "^4.15.4",
+    "timber": "2.1.0-beta.3",
+    "winston": "^2.3.1"
+  }
+}
