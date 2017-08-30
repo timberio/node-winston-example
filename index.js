@@ -9,7 +9,7 @@ const app = express();
 const port = process.env.PORT || 8080
 
 // Initialize our timber transport stream
-const stream = new timber.transports.HTTPS('821_b4d0c518ed89279b:3790ad534227d2359029f9140f9dde9ed46e617850be4f77b782ffb79c4eba3a');
+const stream = new timber.transports.HTTPS('Your-Timber-API-Key');
 
 // Add the timber tranport to winston and attach our stream
 winston.add(timber.transports.Winston, { stream });
