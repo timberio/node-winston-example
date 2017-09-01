@@ -13,6 +13,14 @@ const stream = new timber.transports.HTTPS('Your-Timber-API-Key');
 
 // Add the timber tranport to winston and attach our stream
 winston.add(timber.transports.Winston, { stream });
+// Remove the default transport so our logs are only displayed in timber
+winston.remove(winston.transports.Console);
+
+// In order to properly log exceptions to timber,
+// we need to attach the timber stream to stderr.
+// If you want exceptions to still be displayed in
+// stdout, attach `[stream, process.stdout]` instead
+timber.attach([stream], process.stderr);
 
 // Add the express middleware to log HTTP events
 app.use(timber.middlewares.express);
@@ -24,7 +32,6 @@ app.use(timber.middlewares.express);
 timber.config.logger = winston;
 // Enable logging of the request/response body (defaults to false)
 timber.config.capture_request_body = true;
-timber.config.capture_response_body = true;
 
 
 // Create the index route
@@ -32,15 +39,13 @@ app.get('/', (req, res) => {
   res.send('Welcome to the index route :)');
 });
 
-// This route returns JSON data.
-// Since we enabled http body logging in the timber config,
-// the contents of the JSON object will be sent to timber.
-app.get('/json', (req, res) => {
-  res.json({
-    description: 'This is some sample JSON data',
-    date: new Date(),
-    get: req.params
-  });
+// try POSTing some JSON data to this route
+app.post('/post', (req, res) => {
+  res.send('Now check your logs, the request log line should be augmented with the json data')
+});
+
+app.get('/exception', (req, res) => {
+  throw new Error('This is a sample exception');
 });
 
 // Start our express server
