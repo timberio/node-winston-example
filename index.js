@@ -8,19 +8,15 @@ const app = express();
 // Setup the default port to listen on
 const port = process.env.PORT || 8080
 
-// Initialize our timber transport stream
-const stream = new timber.transports.HTTPS('Your-Timber-API-Key');
+// Initialize our timber transport stream and install on stdout/stderr
+const transport = new timber.transports.HTTPS('Your-Timber-API-Key');
+timber.install(transport)
 
 // Add the timber tranport to winston and attach our stream
-winston.add(timber.transports.Winston, { stream });
+// winston.add(timber.transports.Winston, { stream });
 // Remove the default transport so our logs are only displayed in timber
 winston.remove(winston.transports.Console);
-
-// In order to properly log exceptions to timber,
-// we need to attach the timber stream to stderr.
-// If you want exceptions to still be displayed in
-// stdout, attach `[stream, process.stdout]` instead
-timber.attach([stream], process.stderr);
+winston.add(winston.transports.Console, { formatter: timber.formatters.Winston });
 
 // Add the express middleware to log HTTP events
 app.use(timber.middlewares.express);

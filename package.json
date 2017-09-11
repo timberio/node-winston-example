@@ -19,7 +19,7 @@
   "homepage": "https://github.com/timberio/node-winston-example#readme",
   "dependencies": {
     "express": "^4.15.4",
-    "timber": "2.1.0-beta.5",
+    "timber": "2.1.0-beta.6",
     "winston": "^2.3.1"
   }
 }
